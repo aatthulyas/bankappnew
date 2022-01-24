@@ -1,0 +1,122 @@
+<!-- copy from login-->
+<nav class="navbar navbar-light bg-dark ">
+    <a class="navbar-brand  " href="#" style="color:rgb(85, 98, 237);"><b>&#169; HAFC Bank Pvt.Ltd </b></a>
+    <span class="quote text-light">Giving you freedom...</span>
+</nav>
+<!-- string interpolation -->
+<h3 style="color: antiquewhite;">welcome {{user}}</h3>
+<a routerLink="/transaction">Transaction History</a>
+<div class="container col-md-12 mt-0">
+    <div class="d-flex justify-content-center h-100">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Deposit form</h3>
+
+            </div>
+            <div class="card-body">
+                <form [formGroup]="depositForm" (ngSubmit)="deposit()">
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+
+  <input type="text" class="form-control" name="acno"formControlName="acno"  placeholder="account number" id="login_accno" required>
+
+                    </div>
+                    <div *ngIf="(this.depositForm.get('acno')?.touched||this.depositForm.get('acno')?.dirty)
+                    &&this.depositForm.get('acno')?.errors" class="error">Invalid account number</div>
+
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+               <input type="password" class="form-control" name="pswd" formControlName="pswd" placeholder="password"  id="login_password" required>
+
+                    </div>
+                    <div *ngIf="(this.depositForm.get('pswd')?.touched||this.depositForm.get('pswd')?.dirty)
+                    &&this.depositForm.get('pswd')?.errors" class="error">Invalid password</div>
+
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+
+                        <input type="text" class="form-control" name="amount"formControlName="amount" 
+                         placeholder="amount" id="login_amount" required>
+
+                    </div>
+
+                    <div *ngIf="(this.depositForm.get('amount')?.touched||this.depositForm.get('amount')?.dirty)
+                    &&this.depositForm.get('amount')?.errors" class="error">Invalid amount</div>
+
+
+                    <div class="form-group">
+           <input type="submit" value="deposit"   class="btn float-right login_btn " style="width:50%"> 
+                 
+                  
+                    </div>
+                </form>
+            </div>
+   
+        </div>
+    </div>
+</div>
+
+<!-- withdrawal -->
+<div class="container col-md-12 mt-0">
+    <div class="d-flex justify-content-center h-100">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Withdrawal form</h3>
+
+            </div>
+            <div class="card-body">
+                <form [formGroup]="withdrawalForm" (ngSubmit)="withdrawal()">
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+<!-- id should be different -->
+  <input type="text" class="form-control" name="acno"formControlName="acno1"  placeholder="account number" 
+  id="login_accno1" required>
+
+                    </div>
+                    <div *ngIf="(this.withdrawalForm.get('acno1')?.touched||this.withdrawalForm.get('acno1')?.dirty)
+                    &&this.withdrawalForm.get('acno1')?.errors" class="error">Invalid account number</div>
+
+
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+               <input type="password" class="form-control" name="pswd" formControlName="pswd1" 
+               placeholder="password"  id="login_password1" required>
+
+                    </div>
+                    <div *ngIf="(this.withdrawalForm.get('pswd1')?.touched||this.withdrawalForm.get('pswd1')?.dirty)
+                    &&this.withdrawalForm.get('pswd1')?.errors" class="error">Invalid password</div>
+
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+
+                        <input type="text" class="form-control" name="amount"formControlName="amount1"
+                          placeholder="amount" id="login_amount1" required>
+
+                    </div>
+                    
+                    <div *ngIf="(this.withdrawalForm.get('amount')?.touched||this.withdrawalForm.get('amount')?.dirty)
+                    &&this.withdrawalForm.get('amount')?.errors" class="error">Invalid amount</div>
+
+                    <div class="form-group">
+           <input type="submit" value="withdrawal"   class="btn float-right login_btn " style="width:50%"> 
+                 
+                  
+                    </div>
+                </form>
+            </div>
+   
+        </div>
+    </div>
+</div>

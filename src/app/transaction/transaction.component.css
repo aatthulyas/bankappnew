@@ -1,0 +1,18 @@
+.table{
+    color: cornsilk;
+    border:cyan solid 2px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 50%;
+    text-align: center;
+}
+th{
+    padding: 10px;
+    border: 1px solid rosybrown;
+}
+.home{
+    margin-left: 900px;
+    color: salmon;
+    font-size: 25px;
+}
