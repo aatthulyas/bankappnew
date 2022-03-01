@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 
 @Component({
@@ -8,9 +9,6 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-acno=""
-pswd=""
-amount=""
 depositForm= this.fb.group({
   acno:['',[Validators.required,Validators.pattern('[0-9]*')]],
   pswd:['',[Validators.required,Validators.pattern('[0-9a-zA-Z]*')]],
@@ -26,22 +24,50 @@ withdrawalForm=this.fb.group({
   amount1:['',[Validators.required,Validators.pattern('[0-9]*')]]
 
 })
-user=this.ds.currentUserName
+user=""
+acno=""
+lDate:any
 
 
-  constructor(private ds:DataService,private fb:FormBuilder) { }
+  constructor(private ds:DataService,private fb:FormBuilder,private router:Router) {
+this.lDate= new Date()
+    if(localStorage.getItem("currentUserName")) 
+
+    {this.user=JSON.parse(localStorage.getItem("currentUserName")|| "")
+  }}
 
   ngOnInit(): void {
+    if(!localStorage.getItem("token")){
+      alert("please log in")
+      this.router.navigateByUrl("")
+
+    }
+  }
+
+  logout(){
+    localStorage.removeItem("currentAcno")
+    localStorage.removeItem("currentUserName")
+
+    localStorage.removeItem("token")
+
+
+    this.router.navigateByUrl("")
   }
 deposit(){
   var acno=this.depositForm.value.acno
   var pswd=this.depositForm.value.pswd
   var amount=this.depositForm.value.amount
   if(this.depositForm.valid){
-  let result= this.ds.deposit(acno,pswd,amount)
-  if(result){
-    alert(amount+" credited, new balance is: "+ result)
-  }
+   this.ds.deposit(acno,pswd,amount)
+   .subscribe((result:any)=>{
+     if(result){
+       alert(result.message)
+     }
+   },(result)=>{
+     alert(result.error.message)
+     
+   }
+   )
 }else
 {alert("invalid form")}}
 
@@ -50,11 +76,44 @@ var acno = this.withdrawalForm.value.acno1
 var pswd=this.withdrawalForm.value.pswd1
 var amount= this.withdrawalForm.value.amount1
 if(this.withdrawalForm.valid){
-let result = this.ds.withdrawal(acno,pswd,amount)
-if(result){
-  alert(amount+" debited. New balance is : "+ result)
+this.ds.withdrawal(acno,pswd,amount)
+.subscribe((result:any)=>{
+  if(result){
+    alert(result.message)
+  }
+},(result)=>{
+  alert(result.error.message)
+  
+})}
+else{
+  alert("invalid form")
+}
+}
+
+deleteFromParent(){
+  this.acno=JSON.parse(localStorage.getItem("currentAcno")||"")
+}
+delete(event:any){
+  this.ds.delete(event)
+  .subscribe((result:any)=>{
+    if(result){
+      alert(result.message)
+      this.router.navigateByUrl("")
+    }
+
+    }
+    ,
+    (result)=>{
+      alert(result.error.message)
+    
+  })
+}
+cancel(){
+  this.acno=""
 }
 
 }
-else{alert("invalid form")}
-}}
+
+
+
+

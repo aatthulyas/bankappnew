@@ -32,31 +32,26 @@ register(){
     var uname=this.registerForm.value.uname
     var acno = this.registerForm.value.acno
     var pswd= this.registerForm.value.pswd
-    let result = this.ds.register(acno,pswd,uname)
-if(result){
-  alert("account registered")
-  this.router.navigateByUrl("")
+    //async
+    this.ds.register(acno,pswd,uname)
+    .subscribe((result:any)=>{
+      if(result){
+      alert(result.message)
+      this.router.navigateByUrl("")
+    
+    }},
+    (result)=>{
+alert(result.error.message)}
+)
+    }
+    
+    
 
-}
-else{
-  alert("account already exist")
-}
-}
 else{
   alert("invalid form")
 }
   
   }
+}
   
-  //assigning users to db
-//   let db= this.ds.users
-//   if(acno in db){
-//     alert("account already exist")
-//   }
-//   else{
-//     db[acno]={acno,
-//     uname,
-//   password:pswd,
-// balance:0
-  }
 

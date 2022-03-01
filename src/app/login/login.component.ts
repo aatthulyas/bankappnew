@@ -21,14 +21,7 @@ export class LoginComponent implements OnInit {
     
   })
   
-  // creating database should be above constructor
-  // users:any={
-  //   1000:{acno:1000,uname:"Neil",password:"1000",balance:5000},
-  //   1001:{acno:1001,uname:"Ram",password:"1001",balance:5000},
-  //   1002:{acno:1002,uname:"Ammu",password:"1002",balance:5000},
-
-  // }
-  //for services
+  
 
 
   // DEPENDENCY INJECTION
@@ -57,12 +50,24 @@ login(){
   var password = this.loginForm.value.pswd
   let result=this.acno
   if(this.loginForm.valid){
-    let result=this.ds.login(acno,password)
-    if(result){
-    alert("login successful")
-    this.router.navigateByUrl('dashboard')
+    //async
+    this.ds.login(acno,password)
+    .subscribe((result:any)=>{
+      if(result){
+        alert(result.message)
+        localStorage.setItem("currentAcno",JSON.stringify(result.currentAcno))
+        localStorage.setItem("currentUserName",JSON.stringify(result.currentUserName))
+        localStorage.setItem("token",JSON.stringify(result.token))
+
+        
+        this.router.navigateByUrl('dashboard')
+      }
+    },(result)=>{
+      alert(result.error.message)
+      
+    })
   }
-}
+
 else{
   alert("invalid form")
 }}
